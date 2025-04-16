@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculator</title>
+    <style>
+        :root {
+            --primary: #4f46e5;
+            --primary-hover: #4338ca;
+            --background: #f9fafb;
+            --card-bg: #ffffff;
+            --text: #1f2937;
+            --error: #ef4444;
+            --success: #10b981;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--background);
+            color: var(--text);
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+        
+        .calculator-container {
+            background-color: var(--card-bg);
+            border-radius: 12px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+            padding: 2rem;
+            width: 90%;
+            max-width: 500px;
+            text-align: center;
+        }
+        
+        h1 {
+            color: var(--primary);
+            margin-top: 0;
+            font-size: 1.8rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        form {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+        
+        .input-group {
+            display: flex;
+            align-items: center;
+            gap: 0.3rem;
+        }
+        
+        input, select {
+            padding: 0.6rem 0.5rem;
+            border: 2px solid #e5e7eb;
+            border-radius: 8px;
+            font-size: 1rem;
+            outline: none;
+            transition: border-color 0.3s;
+            flex: 1;
+            display: flex;
+            justify-content: center;
+        }
+        
+        input:focus, select:focus {
+            border-color: var(--primary);
+        }
+        
+        select {
+            background-color: white;
+            cursor: pointer;
+            min-width: 60px;
+            text-align: center;
+        }
+        
+        button {
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            padding: 0.8rem;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            font-weight: 600;
+            margin-top: 0.5rem;
+        }
+        
+        button:hover {
+            background-color: var(--primary-hover);
+        }
+        
+        .result {
+            margin-top: 2rem;
+            padding: 1rem;
+            border-radius: 8px;
+            background-color: #f3f4f6;
+            font-size: 1.5rem;
+            font-weight: 600;
+        }
+        
+        .result.success {
+            color: var(--success);
+            background-color: rgba(16, 185, 129, 0.1);
+        }
+        
+        .result.error {
+            color: var(--error);
+            background-color: rgba(239, 68, 68, 0.1);
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .result {
+            animation: fadeIn 0.3s ease-out;
+        }
+        
+        /* Dark mode support */
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --background: #111827;
+                --card-bg: #1f2937;
+                --text: #f9fafb;
+            }
+            
+            input, select {
+                background-color: #374151;
+                color: white;
+                border-color: #4b5563;
+            }
+        }
+        
+        /* Responsive design */
+        @media (max-width: 480px) {
+            .calculator-container {
+                padding: 1.5rem;
+                width: 95%;
+            }
+            
+            .input-group {
+                flex-direction: column;
+            }
+            
+            select {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="calculator-container">
+        <h1>Smart Calculator</h1>
+        <form action="/" method="post">
+            <div class="input-group">
+                <input type="number" name="num1" placeholder="Enter first number" required>
+                <select name="operator">
+                    <option value="+">+</option>
+                    <option value="-">−</option>
+                    <option value="*">×</option>
+                    <option value="/">÷</option>
+                    <option value="%">%</option>
+                    <option value="^">^</option>
+                    <option value="sqrt">√</option>
+                    <option value="log">log</option>
+                    <option value="exp">exp</option>
+                </select>
+                <input type="number" name="num2" placeholder="Enter second number" required>
+            </div>
+            <button type="submit">Calculate</button>
+        </form>
+        
+        {% if result is not none %}
+            <div class="result success">
+                <span>Result: </span>{{ result }}
+            </div>
+        {% endif %}
+        
+        {% if error is not none %}
+            <div class="result error">
+                <span>Error: </span>{{ error }}
+            </div>
+        {% endif %}
+    </div>
+</body>
+</html>
